@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design System — React Native Mobile App</title>
+  <style>
+    /* ============================================================
+       PHASE 2 — DESIGN TOKENS
+       ============================================================ */
+
+    /* — Light Mode (default) — */
+    :root {
+      /* Primitive Colors */
+      --color-red:         #E30612;
+      --color-charcoal:    #323232;
+      --color-gray:        #757575;
+      --color-light-gray:  #F4F4F6;
+      --color-white:       #FFFFFF;
+      --color-black:       #000000;
+      --color-red-light:   #FCECED;
+      --color-red-dark:    #B0050E;
+
+      /* Semantic Colors — Light */
+      --color-bg:            var(--color-white);
+      --color-surface:       var(--color-light-gray);
+      --color-text-primary:  var(--color-charcoal);
+      --color-text-secondary:var(--color-gray);
+      --color-text-inverse:  var(--color-white);
+      --color-primary:       var(--color-red);
+      --color-primary-hover: var(--color-red-dark);
+      --color-border:        #E0E0E2;
+      --color-disabled:      #BDBDBD;
+      --color-success:       #1B873F;
+      --color-warning:       #E5A000;
+      --color-error:         var(--color-red);
+
+      /* Spacing — 8px grid */
+      --space-1:  4px;
+      --space-2:  8px;
+      --space-3:  12px;
+      --space-4:  16px;
+      --space-5:  24px;
+      --space-6:  32px;
+      --space-7:  40px;
+      --space-8:  48px;
+      --space-9:  56px;
+      --space-10: 64px;
+
+      /* Shadows */
+      --shadow-xs:  0 1px 2px rgba(0,0,0,0.05);
+      --shadow-sm:  0 2px 4px rgba(0,0,0,0.08);
+      --shadow-md:  0 4px 12px rgba(0,0,0,0.10);
+      --shadow-lg:  0 8px 24px rgba(0,0,0,0.12);
+      --shadow-xl:  0 16px 48px rgba(0,0,0,0.16);
+
+      /* Border Radius */
+      --radius-xs:   4px;
+      --radius-sm:   8px;
+      --radius-md:   12px;
+      --radius-lg:   16px;
+      --radius-xl:   24px;
+      --radius-full: 9999px;
+
+      /* Typography tokens */
+      --font-sans: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      --fw-regular:  400;
+      --fw-medium:   500;
+      --fw-semibold: 600;
+      --fw-bold:     700;
+      --lh-tight:    1.2;
+      --lh-normal:   1.5;
+      --lh-relaxed:  1.7;
+    }
+
+    /* — Dark Mode — */
+    :root.dark {
+      --color-bg:            #1A1A1A;
+      --color-surface:       #2A2A2A;
+      --color-text-primary:  #F0F0F2;
+      --color-text-secondary:#A0A0A0;
+      --color-text-inverse:  #1A1A1A;
+      --color-primary:       #F04048;
+      --color-primary-hover: #E30612;
+      --color-border:        #3A3A3A;
+      --color-disabled:      #555555;
+      --color-success:       #34D058;
+      --color-warning:       #F0B429;
+      --color-error:         #F04048;
+      --shadow-xs:  0 1px 2px rgba(0,0,0,0.20);
+      --shadow-sm:  0 2px 4px rgba(0,0,0,0.25);
+      --shadow-md:  0 4px 12px rgba(0,0,0,0.30);
+      --shadow-lg:  0 8px 24px rgba(0,0,0,0.35);
+      --shadow-xl:  0 16px 48px rgba(0,0,0,0.45);
+    }
+
+    /* ============================================================
+       PHASE 3 — TYPOGRAPHY
+       ============================================================ */
+
+    /* Swatch styles */
+    .swatch { width: 120px; text-align: center; }
+    .swatch-block { width: 120px; height: 80px; border-radius: var(--radius-sm); background: var(--sw-color); margin-bottom: 8px; }
+    .swatch-label { font-size: 12px; line-height: 1.4; color: var(--color-text-secondary); }
+    .swatch-label code { font-size: 11px; font-family: var(--font-mono); color: var(--color-text-primary); }
+
+    /* Spacing bar styles */
+    .spacing-item { display: flex; align-items: center; gap: 12px; width: 100%; }
+    .spacing-bar { height: 16px; background: var(--color-primary); border-radius: 2px; min-width: 4px; }
+    .spacing-item span { font-size: 13px; font-family: var(--font-mono); color: var(--color-text-secondary); white-space: nowrap; }
+
+    /* Shadow demo styles */
+    .shadow-demo { width: 140px; height: 80px; background: var(--color-bg); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; }
+    .shadow-demo code { font-size: 12px; font-family: var(--font-mono); color: var(--color-text-secondary); }
+
+    /* Radius demo styles */
+    .radius-demo { width: 100px; height: 100px; background: var(--color-surface); border: 2px solid var(--color-border); display: flex; align-items: center; justify-content: center; }
+    .radius-demo code { font-size: 11px; font-family: var(--font-mono); color: var(--color-text-secondary); }
+
+    /* ——— TYPOGRAPHY STYLES ——— */
+
+    /* Type scale */
+    .type-specimen { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--color-border); }
+    .type-specimen:last-child { border-bottom: none; }
+    .type-specimen .sample { margin-bottom: 4px; color: var(--color-text-primary); }
+    .type-specimen .meta { font-size: 12px; font-family: var(--font-mono); color: var(--color-text-secondary); }
+
+    /* Font stack display */
+    .font-stack-box { background: var(--color-surface); border-radius: var(--radius-sm); padding: 16px 20px; font-family: var(--font-mono); font-size: 13px; color: var(--color-text-primary); line-height: 1.6; max-width: 640px; }
+
+    /* Utility class table */
+    .util-table { width: 100%; max-width: 720px; border-collapse: collapse; font-size: 14px; }
+    .util-table th { text-align: left; font-weight: var(--fw-semibold); padding: 8px 12px; border-bottom: 2px solid var(--color-border); color: var(--color-text-primary); }
+    .util-table td { padding: 8px 12px; border-bottom: 1px solid var(--color-border); color: var(--color-text-secondary); }
+    .util-table code { font-family: var(--font-mono); font-size: 12px; color: var(--color-primary); background: var(--color-surface); padding: 2px 6px; border-radius: 4px; }
+
+    /* Type utility classes */
+    .text-display  { font-size: 48px; font-weight: var(--fw-bold);     line-height: var(--lh-tight);   letter-spacing: -0.03em; }
+    .text-h1       { font-size: 32px; font-weight: var(--fw-bold);     line-height: var(--lh-tight);   letter-spacing: -0.02em; }
+    .text-h2       { font-size: 24px; font-weight: var(--fw-bold);     line-height: var(--lh-tight);   letter-spacing: -0.01em; }
+    .text-h3       { font-size: 20px; font-weight: var(--fw-semibold); line-height: var(--lh-tight);   letter-spacing: -0.01em; }
+    .text-h4       { font-size: 18px; font-weight: var(--fw-semibold); line-height: var(--lh-normal); }
+    .text-body-lg  { font-size: 18px; font-weight: var(--fw-regular);  line-height: var(--lh-relaxed); }
+    .text-body     { font-size: 16px; font-weight: var(--fw-regular);  line-height: var(--lh-normal); }
+    .text-body-sm  { font-size: 14px; font-weight: var(--fw-regular);  line-height: var(--lh-normal); }
+    .text-caption  { font-size: 12px; font-weight: var(--fw-medium);   line-height: var(--lh-normal);  letter-spacing: 0.01em; }
+    .text-overline { font-size: 11px; font-weight: var(--fw-semibold); line-height: var(--lh-normal);  letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* ============================================================
+       BASE / LAYOUT STYLES
+       ============================================================ */
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--color-bg, #FFFFFF);
+      color: var(--color-text-primary, #323232);
+      line-height: 1.5;
+      padding: 0;
+    }
+
+    .page-header {
+      padding: 64px 48px 48px;
+      border-bottom: 1px solid var(--color-border, #F4F4F6);
+    }
+
+    .page-header h1 {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      font-size: 18px;
+      color: var(--color-text-secondary, #757575);
+      max-width: 640px;
+    }
+
+    .section {
+      padding: 48px;
+      border-bottom: 1px solid var(--color-border, #F4F4F6);
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    .section-desc {
+      font-size: 15px;
+      color: var(--color-text-secondary, #757575);
+      margin-bottom: 32px;
+      max-width: 560px;
+    }
+
+    .subsection {
+      margin-bottom: 40px;
+    }
+
+    .subsection-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* Theme toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 100;
+      background: var(--color-surface, #F4F4F6);
+      border: 1px solid var(--color-border, #F4F4F6);
+      border-radius: 12px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--color-text-primary, #323232);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--color-text-primary, #323232);
+      color: var(--color-bg, #FFFFFF);
+    }
+
+    /* ============================================================
+       PHASE 4 — COMPONENT STYLES
+       ============================================================ */
+
+    /* ——— BUTTONS ——— */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: var(--font-sans); font-weight: var(--fw-semibold); font-size: 16px;
+      border: none; cursor: pointer; border-radius: var(--radius-sm);
+      padding: 12px 24px; transition: background 0.15s, box-shadow 0.15s, opacity 0.15s;
+    }
+    .btn-primary { background: var(--color-primary); color: var(--color-white); }
+    .btn-primary:hover { background: var(--color-primary-hover); box-shadow: var(--shadow-sm); }
+    .btn-secondary { background: var(--color-surface); color: var(--color-text-primary); border: 1px solid var(--color-border); }
+    .btn-secondary:hover { background: var(--color-border); }
+    .btn-ghost { background: transparent; color: var(--color-primary); }
+    .btn-ghost:hover { background: var(--color-surface); }
+    .btn-destructive { background: var(--color-error); color: var(--color-white); }
+    .btn-destructive:hover { opacity: 0.9; }
+    .btn-sm { font-size: 14px; padding: 8px 16px; border-radius: var(--radius-xs); }
+    .btn-lg { font-size: 18px; padding: 16px 32px; border-radius: var(--radius-md); }
+    .btn:disabled, .btn-disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+
+    /* ——— CARDS ——— */
+    .card {
+      background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md);
+      padding: 24px; box-shadow: var(--shadow-sm); max-width: 320px; transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: var(--shadow-md); }
+    .card-elevated { box-shadow: var(--shadow-lg); border: none; }
+    .card-elevated:hover { box-shadow: var(--shadow-xl); }
+    .card-title { font-size: 18px; font-weight: var(--fw-semibold); color: var(--color-text-primary); margin-bottom: 8px; }
+    .card-body { font-size: 14px; color: var(--color-text-secondary); line-height: var(--lh-normal); margin-bottom: 16px; }
+    .card-footer { display: flex; gap: 8px; }
+
+    /* ——— INPUTS ——— */
+    .input-group { display: flex; flex-direction: column; gap: 6px; max-width: 320px; }
+    .input-label { font-size: 14px; font-weight: var(--fw-medium); color: var(--color-text-primary); }
+    .input {
+      font-family: var(--font-sans); font-size: 16px; padding: 12px 16px;
+      border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+      background: var(--color-bg); color: var(--color-text-primary);
+      outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .input::placeholder { color: var(--color-disabled); }
+    .input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(227,6,18,0.12); }
+    .input-error { border-color: var(--color-error); }
+    .input-error:focus { box-shadow: 0 0 0 3px rgba(227,6,18,0.18); }
+    .input-hint { font-size: 12px; color: var(--color-text-secondary); }
+    .input-error-msg { font-size: 12px; color: var(--color-error); }
+    .input:disabled { background: var(--color-surface); color: var(--color-disabled); cursor: not-allowed; }
+
+    /* Component demo layout helpers */
+    .comp-row { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+    .comp-label { font-size: 12px; font-family: var(--font-mono); color: var(--color-text-secondary); margin-bottom: 8px; }
+
+  </style>
+</head>
+<body>
+
+  <button class="theme-toggle" onclick="toggleTheme()">◑ Toggle Dark Mode</button>
+
+  <!-- ============================================================
+       PAGE HEADER
+       ============================================================ -->
+  <header class="page-header">
+    <h1>Design System</h1>
+    <p>A complete CSS design system for a React Native mobile app. Built on an 8px grid with light &amp; dark mode support.</p>
+  </header>
+
+  <!-- ============================================================
+       SECTION 1 — DESIGN TOKENS
+       ============================================================ -->
+  <section class="section" id="tokens">
+    <h2 class="section-title">1 · Design Tokens</h2>
+    <p class="section-desc">Primitive and semantic tokens for color, spacing, typography, shadows, and border radius.</p>
+
+    <!-- 1a. Color Palette -->
+    <div class="subsection" id="tokens-color">
+      <h3 class="subsection-title">Color Palette</h3>
+      <div class="grid" id="color-swatches">
+        <div class="swatch" style="--sw-color: var(--color-red)"><div class="swatch-block"></div><span class="swatch-label">Red<br><code>--color-red</code><br>#E30612</span></div>
+        <div class="swatch" style="--sw-color: var(--color-charcoal)"><div class="swatch-block"></div><span class="swatch-label">Charcoal<br><code>--color-charcoal</code><br>#323232</span></div>
+        <div class="swatch" style="--sw-color: var(--color-gray)"><div class="swatch-block"></div><span class="swatch-label">Gray<br><code>--color-gray</code><br>#757575</span></div>
+        <div class="swatch" style="--sw-color: var(--color-light-gray)"><div class="swatch-block"></div><span class="swatch-label">Light Gray<br><code>--color-light-gray</code><br>#F4F4F6</span></div>
+        <div class="swatch" style="--sw-color: var(--color-white)"><div class="swatch-block" style="border:1px solid var(--color-border)"></div><span class="swatch-label">White<br><code>--color-white</code><br>#FFFFFF</span></div>
+        <div class="swatch" style="--sw-color: var(--color-red-light)"><div class="swatch-block"></div><span class="swatch-label">Red Light<br><code>--color-red-light</code><br>#FCECED</span></div>
+        <div class="swatch" style="--sw-color: var(--color-red-dark)"><div class="swatch-block"></div><span class="swatch-label">Red Dark<br><code>--color-red-dark</code><br>#B0050E</span></div>
+      </div>
+    </div>
+
+    <!-- 1b. Semantic Colors -->
+    <div class="subsection" id="tokens-semantic">
+      <h3 class="subsection-title">Semantic Colors</h3>
+      <div class="grid" id="semantic-swatches">
+        <div class="swatch" style="--sw-color: var(--color-bg)"><div class="swatch-block" style="border:1px solid var(--color-border)"></div><span class="swatch-label">Background<br><code>--color-bg</code></span></div>
+        <div class="swatch" style="--sw-color: var(--color-surface)"><div class="swatch-block"></div><span class="swatch-label">Surface<br><code>--color-surface</code></span></div>
+        <div class="swatch" style="--sw-color: var(--color-text-primary)"><div class="swatch-block"></div><span class="swatch-label">Text Primary<br><code>--color-text-primary</code></span></div>
+        <div class="swatch" style="--sw-color: var(--color-text-secondary)"><div class="swatch-block"></div><span class="swatch-label">Text Secondary<br><code>--color-text-secondary</code></span></div>
+        <div class="swatch" style="--sw-color: var(--color-primary)"><div class="swatch-block"></div><span class="swatch-label">Primary<br><code>--color-primary</code></span></div>
+        <div class="swatch" style="--sw-color: var(--color-border)"><div class="swatch-block"></div><span class="swatch-label">Border<br><code>--color-border</code></span></div>
+        <div class="swatch" style="--sw-color: var(--color-success)"><div class="swatch-block"></div><span class="swatch-label">Success<br><code>--color-success</code></span></div>
+        <div class="swatch" style="--sw-color: var(--color-warning)"><div class="swatch-block"></div><span class="swatch-label">Warning<br><code>--color-warning</code></span></div>
+        <div class="swatch" style="--sw-color: var(--color-error)"><div class="swatch-block"></div><span class="swatch-label">Error<br><code>--color-error</code></span></div>
+        <div class="swatch" style="--sw-color: var(--color-disabled)"><div class="swatch-block"></div><span class="swatch-label">Disabled<br><code>--color-disabled</code></span></div>
+      </div>
+    </div>
+
+    <!-- 1c. Spacing Scale -->
+    <div class="subsection" id="tokens-spacing">
+      <h3 class="subsection-title">Spacing Scale (8px grid)</h3>
+      <div class="grid" id="spacing-blocks">
+        <div class="spacing-item"><div class="spacing-bar" style="width:4px"></div><span>--space-1 · 4px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width:8px"></div><span>--space-2 · 8px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width:12px"></div><span>--space-3 · 12px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width:16px"></div><span>--space-4 · 16px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width:24px"></div><span>--space-5 · 24px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width:32px"></div><span>--space-6 · 32px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width:40px"></div><span>--space-7 · 40px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width:48px"></div><span>--space-8 · 48px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width:56px"></div><span>--space-9 · 56px</span></div>
+        <div class="spacing-item"><div class="spacing-bar" style="width:64px"></div><span>--space-10 · 64px</span></div>
+      </div>
+    </div>
+
+    <!-- 1d. Shadow Scale -->
+    <div class="subsection" id="tokens-shadow">
+      <h3 class="subsection-title">Shadows</h3>
+      <div class="grid" id="shadow-blocks">
+        <div class="shadow-demo" style="box-shadow: var(--shadow-xs)"><code>--shadow-xs</code></div>
+        <div class="shadow-demo" style="box-shadow: var(--shadow-sm)"><code>--shadow-sm</code></div>
+        <div class="shadow-demo" style="box-shadow: var(--shadow-md)"><code>--shadow-md</code></div>
+        <div class="shadow-demo" style="box-shadow: var(--shadow-lg)"><code>--shadow-lg</code></div>
+        <div class="shadow-demo" style="box-shadow: var(--shadow-xl)"><code>--shadow-xl</code></div>
+      </div>
+    </div>
+
+    <!-- 1e. Border Radius -->
+    <div class="subsection" id="tokens-radius">
+      <h3 class="subsection-title">Border Radius</h3>
+      <div class="grid" id="radius-blocks">
+        <div class="radius-demo" style="border-radius: var(--radius-xs)"><code>xs · 4px</code></div>
+        <div class="radius-demo" style="border-radius: var(--radius-sm)"><code>sm · 8px</code></div>
+        <div class="radius-demo" style="border-radius: var(--radius-md)"><code>md · 12px</code></div>
+        <div class="radius-demo" style="border-radius: var(--radius-lg)"><code>lg · 16px</code></div>
+        <div class="radius-demo" style="border-radius: var(--radius-xl)"><code>xl · 24px</code></div>
+        <div class="radius-demo" style="border-radius: var(--radius-full); width:80px; height:80px"><code>full</code></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2 — TYPOGRAPHY
+       ============================================================ -->
+  <section class="section" id="typography">
+    <h2 class="section-title">2 · Typography</h2>
+    <p class="section-desc">Font stack, type scale, weights, and utility classes for consistent text rendering.</p>
+
+    <!-- 2a. Font Stack -->
+    <div class="subsection" id="type-stack">
+      <h3 class="subsection-title">Font Stack</h3>
+      <div class="font-stack-box">
+        <strong>Sans-serif (primary):</strong><br>
+        'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif<br><br>
+        <strong>Monospace (code):</strong><br>
+        'SF Mono', 'Fira Code', 'Cascadia Code', monospace
+      </div>
+    </div>
+
+    <!-- 2b. Type Scale -->
+    <div class="subsection" id="type-scale">
+      <h3 class="subsection-title">Type Scale</h3>
+      <div class="type-specimen"><div class="sample text-display">Display — 48px</div><div class="meta">.text-display · 48px / 700 / 1.2 / -0.03em</div></div>
+      <div class="type-specimen"><div class="sample text-h1">Heading 1 — 32px</div><div class="meta">.text-h1 · 32px / 700 / 1.2 / -0.02em</div></div>
+      <div class="type-specimen"><div class="sample text-h2">Heading 2 — 24px</div><div class="meta">.text-h2 · 24px / 700 / 1.2 / -0.01em</div></div>
+      <div class="type-specimen"><div class="sample text-h3">Heading 3 — 20px</div><div class="meta">.text-h3 · 20px / 600 / 1.2 / -0.01em</div></div>
+      <div class="type-specimen"><div class="sample text-h4">Heading 4 — 18px</div><div class="meta">.text-h4 · 18px / 600 / 1.5</div></div>
+      <div class="type-specimen"><div class="sample text-body-lg">Body Large — The quick brown fox jumps over the lazy dog.</div><div class="meta">.text-body-lg · 18px / 400 / 1.7</div></div>
+      <div class="type-specimen"><div class="sample text-body">Body — The quick brown fox jumps over the lazy dog.</div><div class="meta">.text-body · 16px / 400 / 1.5</div></div>
+      <div class="type-specimen"><div class="sample text-body-sm">Body Small — The quick brown fox jumps over the lazy dog.</div><div class="meta">.text-body-sm · 14px / 400 / 1.5</div></div>
+      <div class="type-specimen"><div class="sample text-caption">Caption — Supporting text and metadata</div><div class="meta">.text-caption · 12px / 500 / 1.5 / 0.01em</div></div>
+      <div class="type-specimen"><div class="sample text-overline">Overline — Section Label</div><div class="meta">.text-overline · 11px / 600 / 1.5 / 0.08em / uppercase</div></div>
+    </div>
+
+    <!-- 2c. Utility Classes -->
+    <div class="subsection" id="type-utilities">
+      <h3 class="subsection-title">Utility Classes</h3>
+      <table class="util-table">
+        <thead><tr><th>Class</th><th>Size</th><th>Weight</th><th>Line Height</th><th>Tracking</th></tr></thead>
+        <tbody>
+          <tr><td><code>.text-display</code></td><td>48px</td><td>700</td><td>1.2</td><td>-0.03em</td></tr>
+          <tr><td><code>.text-h1</code></td><td>32px</td><td>700</td><td>1.2</td><td>-0.02em</td></tr>
+          <tr><td><code>.text-h2</code></td><td>24px</td><td>700</td><td>1.2</td><td>-0.01em</td></tr>
+          <tr><td><code>.text-h3</code></td><td>20px</td><td>600</td><td>1.2</td><td>-0.01em</td></tr>
+          <tr><td><code>.text-h4</code></td><td>18px</td><td>600</td><td>1.5</td><td>—</td></tr>
+          <tr><td><code>.text-body-lg</code></td><td>18px</td><td>400</td><td>1.7</td><td>—</td></tr>
+          <tr><td><code>.text-body</code></td><td>16px</td><td>400</td><td>1.5</td><td>—</td></tr>
+          <tr><td><code>.text-body-sm</code></td><td>14px</td><td>400</td><td>1.5</td><td>—</td></tr>
+          <tr><td><code>.text-caption</code></td><td>12px</td><td>500</td><td>1.5</td><td>0.01em</td></tr>
+          <tr><td><code>.text-overline</code></td><td>11px</td><td>600</td><td>1.5</td><td>0.08em</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3 — COMPONENTS
+       ============================================================ -->
+  <section class="section" id="components">
+    <h2 class="section-title">3 · Components</h2>
+    <p class="section-desc">Token-driven component specs for buttons, cards, and inputs.</p>
+
+    <!-- 3a. Buttons -->
+    <div class="subsection" id="comp-buttons">
+      <h3 class="subsection-title">Buttons</h3>
+      <div>
+        <div class="comp-label">Variants</div>
+        <div class="comp-row">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-secondary">Secondary</button>
+          <button class="btn btn-ghost">Ghost</button>
+          <button class="btn btn-destructive">Destructive</button>
+        </div>
+        <div class="comp-label">Sizes</div>
+        <div class="comp-row">
+          <button class="btn btn-primary btn-sm">Small</button>
+          <button class="btn btn-primary">Default</button>
+          <button class="btn btn-primary btn-lg">Large</button>
+        </div>
+        <div class="comp-label">States</div>
+        <div class="comp-row">
+          <button class="btn btn-primary">Enabled</button>
+          <button class="btn btn-primary" disabled>Disabled</button>
+          <button class="btn btn-secondary" disabled>Disabled</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3b. Cards -->
+    <div class="subsection" id="comp-cards">
+      <h3 class="subsection-title">Cards</h3>
+      <div class="comp-row">
+        <div class="card">
+          <div class="card-title">Default Card</div>
+          <div class="card-body">Built with semantic tokens. Border, subtle shadow, and hover elevation shift.</div>
+          <div class="card-footer"><button class="btn btn-primary btn-sm">Action</button><button class="btn btn-ghost btn-sm">Cancel</button></div>
+        </div>
+        <div class="card card-elevated">
+          <div class="card-title">Elevated Card</div>
+          <div class="card-body">No border, deeper shadow. Use for featured or promoted content blocks.</div>
+          <div class="card-footer"><button class="btn btn-primary btn-sm">Learn More</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3c. Inputs -->
+    <div class="subsection" id="comp-inputs">
+      <h3 class="subsection-title">Inputs</h3>
+      <div class="comp-row">
+        <div class="input-group">
+          <label class="input-label">Email</label>
+          <input class="input" type="email" placeholder="you@example.com" />
+          <span class="input-hint">We'll never share your email.</span>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Password</label>
+          <input class="input input-error" type="password" value="short" />
+          <span class="input-error-msg">Password must be at least 8 characters.</span>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Disabled</label>
+          <input class="input" type="text" value="Cannot edit" disabled />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       THEME TOGGLE SCRIPT
+       ============================================================ -->
+  <script>
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+  </script>
+
+</body>
+</html>
