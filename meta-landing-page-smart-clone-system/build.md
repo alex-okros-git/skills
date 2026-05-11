@@ -1,3 +1,4 @@
+---
 # build.md
 
 # Run this second. Paste your principles brief from extract.md below
@@ -33,12 +34,12 @@ Then build the page.
 
 ---
 
-# Optional: visual identity layer
+# Optional: visual identity layer (see commented section below)
 
 <!-- If you have a DESIGN.md file, paste its contents below
 or reference its path in your repo.
 
 The model will apply your brand tokens (colors, typography,
-spacing, components) to the output automatically.
+spacing, components) to the output automatically.  -->
 
-[PASTE DESIGN.md CONTENTS HERE — OR DELETE THIS SECTION] -->
+[PASTE DESIGN.md CONTENTS HERE — OR DELETE THIS SECTION]

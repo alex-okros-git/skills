@@ -27,6 +27,8 @@ The result is a page that converts for the same reasons as the source, but looks
 
 ### Step 1 → `extract.md`
 
+[Link to extract.md](./extract.md)
+
 Feed an AI model the landing page you want to learn from (URL, copy-paste, or screenshot). The prompt forces the model to ignore all visual elements and answer six questions about the page's **persuasion architecture**:
 
 - What does the visitor already believe?
@@ -39,6 +41,8 @@ Feed an AI model the landing page you want to learn from (URL, copy-paste, or sc
 The output is a numbered **Principles Brief** — a pure logic document with zero visual description.
 
 ### Step 2 → `build.md`
+
+[Link to build.md](./build.md)
 
 Paste the Principles Brief into this prompt. The model builds a complete landing page that applies the same conversion logic, but with **four hard structural constraints**:
 
